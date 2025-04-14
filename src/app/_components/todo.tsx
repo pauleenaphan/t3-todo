@@ -96,9 +96,9 @@ export function Todopage(){
                 
                 {todoForm ? (
                     <form onSubmit={handleTodoForm}
-                        className="bg-pink-100 flex flex-col"
+                        className="flex flex-col bg-gray-100 p-4 my-2 rounded"
                     >
-                        <h2> {currFormAction} todo form </h2>
+                        <h2 className="font-bold"> {currFormAction} Todo Form </h2>
                         <div className="flex flex-col">
                             <label> name </label>
                             <input 
@@ -106,15 +106,19 @@ export function Todopage(){
                                 placeholder="name of todo here"
                                 value={todo.name}
                                 onChange={(e) =>{ handleTodoChange("name", e.target.value)}}
+                                className="p-2 border-black border-2 rounded mb-2"
                             />
                             <label> text </label>
                             <textarea 
                                 placeholder="text here"
                                 value={todo.text}
                                 onChange={(e) => { handleTodoChange("text", e.target.value)}}
+                                className="p-2 border-black border-2 rounded mb-2"
                             />
                         </div>
-                        <button type="submit"> Submit Todo </button>
+                        <button type="submit"
+                            className="border-2 border-green-500 rounded cursor-pointer hover:bg-green-500 hover:text-white"
+                        > Submit Todo </button>
                     </form>
                 ) : (
                     ""
@@ -142,12 +146,11 @@ export function Todopage(){
                                     }}
                                     className="border-2 border-orange-500 rounded px-2 cursor-pointer hover:bg-orange-500 hover:text-white"
                                 > EDIT TODO </button>
-                                <button
+                                {/* <button
                                     onClick={() =>{ router.push(`/todo/${todo.id}`)}}
                                     className="border-2 border-blue-500 rounded px-2 cursor-pointer hover:bg-blue-500 hover:text-white"
-                                > VIEW THIS TODO </button>
+                                > VIEW THIS TODO </button> */}
                             </div>
-                            
                         </div>
                     ))
                 ) : (
