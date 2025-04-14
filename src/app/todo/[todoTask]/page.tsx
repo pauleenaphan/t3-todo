@@ -1,14 +1,15 @@
 "use client";
 
 import { api } from "~/trpc/react";
+type ParamsType = { todoTask: string }
 
-export default function TodoTask ({ params }: { params: { todoTask: string } }){
-    if(!params){
-        return(
-            <p> loading todo task... </p>
-        )
+export default async function TodoTask({ params }: { params: Promise<ParamsType> }) {
+    const resolvedParams = await params;
+    if (!resolvedParams) {
+        return <p>loading todo task...</p>
     }
-    const { data } = api.todo.getTodo.useQuery(parseInt(params.todoTask));
+
+    const { data } = api.todo.getTodo.useQuery(parseInt(resolvedParams.todoTask));
 
     return(
         <main>

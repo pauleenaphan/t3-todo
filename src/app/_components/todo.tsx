@@ -9,7 +9,7 @@ interface Todo {
     text: string,
     createdAt?: Date,
     updatedAt?: Date,
-    done?: Boolean,
+    done?: boolean,
     id: number
 }
 
@@ -34,11 +34,11 @@ export function Todopage(){
 
     // defines the mutation for our backend endpoints 
     const newTodo = api.todo.newTodo.useMutation({
-        onSuccess: () =>{
+        onSuccess: async () =>{
             setTodoForm(false);
             setTodo({name: "", text: "", id: 0});
             alert("new todo has been added");
-            refetch();
+            await refetch();
         },
         onError: () =>{
             alert("error creating new todo");
@@ -46,9 +46,9 @@ export function Todopage(){
     })
 
     const removeTodo = api.todo.deleteTodo.useMutation({
-        onSuccess: () =>{
+        onSuccess: async () =>{
             alert("todo has been removed");
-            refetch();
+            await refetch();
         },
         onError: () =>{
             alert("todo has NOT been removed ");
@@ -56,10 +56,10 @@ export function Todopage(){
     })
 
     const editTodo = api.todo.editTodo.useMutation({
-        onSuccess: () =>{
+        onSuccess: async () =>{
             alert("todo is succesfully edit");
             setTodoForm(false);
-            refetch();
+            await refetch();
         },
         onError: () =>{
             alert("todo cannot be edited");
@@ -131,8 +131,8 @@ export function Todopage(){
                             <p className="mb-4"> {todo.text} </p>
                             <div className="flex gap-3 flex-row">
                                 <button 
-                                    onClick={() =>{ todo.id ? removeTodo.mutate(todo.id) : "" }}
-                                    className="border border-red-500 border-2 rounded px-2 cursor-pointer hover:bg-red-500 hover:text-white"
+                                    onClick={() =>{ if(todo.id){ removeTodo.mutate(todo.id) }}}
+                                    className="border-2 border-red-500 rounded px-2 cursor-pointer hover:bg-red-500 hover:text-white"
                                     > REMOVE TODO </button>
                                 <button
                                     onClick={() =>{
@@ -140,11 +140,11 @@ export function Todopage(){
                                         setCurrFormAction("Edit");
                                         setTodoForm(!todoForm);
                                     }}
-                                    className="border border-orange-500 border-2 rounded px-2 cursor-pointer hover:bg-orange-500 hover:text-white"
+                                    className="border-2 border-orange-500 rounded px-2 cursor-pointer hover:bg-orange-500 hover:text-white"
                                 > EDIT TODO </button>
                                 <button
                                     onClick={() =>{ router.push(`/todo/${todo.id}`)}}
-                                    className="border border-blue-500 border-2 rounded px-2 cursor-pointer hover:bg-blue-500 hover:text-white"
+                                    className="border-2 border-blue-500 rounded px-2 cursor-pointer hover:bg-blue-500 hover:text-white"
                                 > VIEW THIS TODO </button>
                             </div>
                             
